@@ -652,6 +652,40 @@ color: var(–gold); text-decoration: none; font-weight: 600;
 }
 .qr-text a:hover { text-decoration: underline; }
 
+ .collage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .collage img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .collage img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .collage {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .collage {
+                grid-template-columns: 1fr;
+            }
+        }
+
 /* ============================================================
 SCROLLBAR
 ============================================================ */
@@ -728,10 +762,10 @@ SLIDE 1 — KRITIKA ZUTSHI
 <!-- REPLACE IMAGE HERE: click the frame to upload, or change src below -->
 <div class="photo-wrap" onclick="triggerPhoto('p1')">
 <input type="file" class="photo-file-input" id="p1" accept="image/*" onchange="loadPhoto('p1', this)">
-<img id="p1-img" src="" alt="" style="display:none;">
+<img src="kritika.JPG" alt="">
 <div class="photo-placeholder" id="p1-ph">
-<span class="ph-icon">📷</span>
-<span class="ph-text">Add Photo</span>
+<!--span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span-->
 </div>
 <div class="photo-hover-overlay">📂 Change</div>
 </div>
@@ -783,10 +817,10 @@ SLIDE 2 — GOKUL
 <!-- REPLACE IMAGE HERE -->
 <div class="photo-wrap" onclick="triggerPhoto('p2')">
 <input type="file" class="photo-file-input" id="p2" accept="image/*" onchange="loadPhoto('p2', this)">
-<img id="p2-img" src="" alt="" style="display:none;">
+<img src="gokul.JPG" alt="">
 <div class="photo-placeholder" id="p2-ph">
-<span class="ph-icon">📷</span>
-<span class="ph-text">Add Photo</span>
+<!--span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span-->
 </div>
 <div class="photo-hover-overlay">📂 Change</div>
 </div>
@@ -834,10 +868,11 @@ SLIDE 3 — DR. RAJESHWARI
 <!-- REPLACE IMAGE HERE -->
 <div class="photo-wrap" onclick="triggerPhoto('p3')">
 <input type="file" class="photo-file-input" id="p3" accept="image/*" onchange="loadPhoto('p3', this)">
-<img id="p3-img" src="" alt="" style="display:none;">
+<!--img id="p3-img" src="data:image" alt="" style="display:none;"-->
+<img src="rajeshwari.JPG" alt="Sample Image">
 <div class="photo-placeholder" id="p3-ph">
-<span class="ph-icon">📷</span>
-<span class="ph-text">Add Photo</span>
+<!--span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span-->
 </div>
 <div class="photo-hover-overlay">📂 Change</div>
 </div>
@@ -889,10 +924,10 @@ SLIDE 4 — DR. ARCHANA
 <!-- REPLACE IMAGE HERE -->
 <div class="photo-wrap" onclick="triggerPhoto('p4')">
 <input type="file" class="photo-file-input" id="p4" accept="image/*" onchange="loadPhoto('p4', this)">
-<img id="p4-img" src="" alt="" style="display:none;">
+<img src="archana.jpg" alt="">
 <div class="photo-placeholder" id="p4-ph">
-<span class="ph-icon">📷</span>
-<span class="ph-text">Add Photo</span>
+<!--span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span-->
 </div>
 <div class="photo-hover-overlay">📂 Change</div>
 </div>
@@ -952,11 +987,22 @@ SLIDE 5 — COLLAGE
 
 <!-- COLLAGE GRID — 6 slots -->
 <!-- REPLACE IMAGES HERE: click each frame to upload -->
-<div class="collage-grid">
 
+<div class="collage">
+        <img src="img1.jpg" alt="Image 1">
+        <img src="img2.jpg" alt="Image 2">
+        <img src="img3.jpg" alt="Image 3">
+        <img src="img4.jpg" alt="Image 4">
+        <img src="img5.jpg" alt="Image 5">
+        <img src="img6.jpg" alt="Image 6">
+</div>
+
+<!--div class="collage-grid">
+<img src="img1.JPG" alt="">
 <div class="cslot" onclick="triggerC(0)">
 <input type="file" class="collage-file" id="cf0" accept="image/*" onchange="loadC(0,this)">
-<div class="cslot-bg"><span class="ci">📷</span><span class="cl">Photo 1</span></div>
+
+<div class="cslot-bg"><span class="ci">📷</span><span class="cl"><img src="img1.JPG" alt=""></span></div>
 <div class="cslot-over">📂 Change</div>
 </div>
 
@@ -992,11 +1038,11 @@ SLIDE 5 — COLLAGE
 
 </div>
 
-<div class="collage-hint">6 photo slots · <b>click any frame</b> to upload · hover over a filled photo to swap it</div>
+<div class="collage-hint">6 photo slots · <b>click any frame</b> to upload · hover over a filled photo to swap it</div-->
 
 <!-- EDIT CAPTION HERE -->
 <div class="collage-caption-box">
-<div class="collage-caption-label">✍️ Team caption</div>
+<div class="collage-caption-label">✍️ HCL Healthcare</div>
 <textarea class="collage-caption" rows="2"
 placeholder="Once a team, always a family… 🧡">Once a team, always a family. 🧡</textarea>
 </div>
@@ -1007,22 +1053,21 @@ placeholder="Once a team, always a family… 🧡">Once a team, always a family.
 <span>❤️</span><span>🫶</span><span>✨</span><span>🧡</span>
 </div>
 
-<!-- QR / HOST BLOCK -->
+<!-- QR / HOST BLOCK >
 <div class="qr-block">
 <div class="qr-box">📱</div>
-<div class="qr-text">
-<h3>Share this page with Ashish</h3>
+<div class="qr-text"-->
+<!--h3>Share this page with Ashish</h3>
 <p>
 Host this file on <a href="https://app.netlify.com/drop" target="_blank">Netlify Drop</a>
 or <a href="https://pages.github.com" target="_blank">GitHub Pages</a> to get a shareable link,
 then generate a QR code at <a href="https://qr.io" target="_blank">qr.io</a> and print it
 for the farewell event! 🎁
-</p>
+</p-->
 </div>
 </div>
 
 </div>
-```
 
 </div>
 
