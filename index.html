@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farewell Ashish 🧡</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+VARIABLES & RESET
+============================================================ */
+:root {
+--ink: #12111A;
+--paper: #FDFAF4;
+--gold: #D4A843;
+--gold-lt: #F0CB72;
+--blush: #E8756A;
+--sage: #5E8C61;
+--slate: #4A6FA5;
+--plum: #7B4F8E;
+--warm: #F5EDD6;
+--muted: #8A8490;
+
+/* per-page accents */
+–p1: #E8756A; –p1b: #fce4e1;
+–p2: #5E8C61; –p2b: #e1f0e2;
+–p3: #4A6FA5; –p3b: #dde8f5;
+–p4: #7B4F8E; –p4b: #eeddf5;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Outfit’, sans-serif;
+background: var(–ink);
+color: var(–ink);
+overflow: hidden;
+height: 100vh;
+width: 100vw;
+}
+
+/* ============================================================
+CONFETTI LAYER
+============================================================ */
+#confetti {
+position: fixed; inset: 0;
+pointer-events: none; z-index: 999;
+}
+
+/* ============================================================
+SLIDE ENGINE
+============================================================ */
+#slides {
+position: relative;
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+}
+
+.slide {
+position: absolute; inset: 0;
+display: flex; flex-direction: column;
+opacity: 0;
+transform: translateX(60px);
+pointer-events: none;
+transition: opacity 0.55s cubic-bezier(.4,0,.2,1),
+transform 0.55s cubic-bezier(.4,0,.2,1);
+overflow-y: auto;
+}
+.slide.active {
+opacity: 1; transform: translateX(0);
+pointer-events: all;
+}
+.slide.exit-left {
+opacity: 0; transform: translateX(-60px);
+}
+
+/* ============================================================
+NAVIGATION ARROWS
+============================================================ */
+.nav-arrow {
+position: fixed; top: 50%; z-index: 500;
+transform: translateY(-50%);
+width: 50px; height: 50px; border-radius: 50%;
+border: none; cursor: pointer;
+font-size: 1.4rem;
+display: flex; align-items: center; justify-content: center;
+backdrop-filter: blur(12px);
+transition: transform 0.2s, background 0.2s, opacity 0.3s;
+box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+#prevBtn {
+left: 1rem;
+background: rgba(255,255,255,0.12);
+color: white;
+}
+#nextBtn {
+right: 1rem;
+background: rgba(255,255,255,0.12);
+color: white;
+}
+.nav-arrow:hover {
+transform: translateY(-50%) scale(1.12);
+background: rgba(255,255,255,0.25);
+}
+.nav-arrow.hidden { opacity: 0; pointer-events: none; }
+
+/* progress dots */
+#dots {
+position: fixed; bottom: 1.4rem; left: 50%;
+transform: translateX(-50%);
+display: flex; gap: 8px; z-index: 500;
+}
+.dot {
+width: 8px; height: 8px; border-radius: 50%;
+background: rgba(255,255,255,0.3);
+transition: background 0.3s, transform 0.3s;
+cursor: pointer;
+}
+.dot.active { background: white; transform: scale(1.4); }
+
+/* save button */
+#saveBtn {
+position: fixed; top: 1.1rem; right: 1.1rem; z-index: 500;
+background: rgba(255,255,255,0.12);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255,255,255,0.22);
+color: white; border-radius: 30px;
+padding: 0.45rem 1.1rem;
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.78rem; font-weight: 700;
+cursor: pointer; letter-spacing: 0.05rem;
+text-transform: uppercase;
+transition: background 0.2s;
+}
+#saveBtn:hover { background: rgba(255,255,255,0.22); }
+
+/* toast */
+#toast {
+position: fixed; bottom: 3.5rem; left: 50%;
+transform: translateX(-50%);
+background: rgba(20,18,28,0.9); backdrop-filter: blur(14px);
+border: 1px solid rgba(255,255,255,0.12);
+color: white; padding: 0.6rem 1.8rem; border-radius: 40px;
+font-weight: 600; font-size: 0.85rem;
+opacity: 0; transition: opacity 0.4s;
+pointer-events: none; z-index: 600;
+white-space: nowrap;
+}
+#toast.show { opacity: 1; }
+
+/* ============================================================
+SLIDE 0 — COVER
+============================================================ */
+#s0 {
+align-items: center; justify-content: center;
+background: linear-gradient(145deg, #12111A 0%, #1E1630 45%, #12111A 100%);
+overflow: hidden;
+}
+
+.cover-orb {
+position: absolute; border-radius: 50%;
+pointer-events: none;
+}
+.orb1 {
+width: 520px; height: 520px;
+top: -180px; left: -180px;
+background: radial-gradient(circle, rgba(212,168,67,0.18) 0%, transparent 65%);
+animation: orbFloat 8s ease-in-out infinite;
+}
+.orb2 {
+width: 400px; height: 400px;
+bottom: -140px; right: -120px;
+background: radial-gradient(circle, rgba(232,117,106,0.15) 0%, transparent 65%);
+animation: orbFloat 10s ease-in-out infinite reverse;
+}
+.orb3 {
+width: 280px; height: 280px;
+top: 40%; left: 60%;
+background: radial-gradient(circle, rgba(94,140,97,0.12) 0%, transparent 65%);
+animation: orbFloat 7s ease-in-out infinite 2s;
+}
+@keyframes orbFloat {
+0%,100% { transform: translate(0,0) scale(1); }
+50% { transform: translate(18px,-18px) scale(1.06); }
+}
+
+.cover-inner {
+position: relative; z-index: 1;
+display: flex; flex-direction: column;
+align-items: center; text-align: center;
+gap: 1.2rem; padding: 2rem;
+}
+
+.cover-eyebrow {
+font-size: 0.72rem; font-weight: 700; letter-spacing: 0.35rem;
+text-transform: uppercase; color: var(–gold);
+border: 1px solid rgba(212,168,67,0.35);
+padding: 0.35rem 1.2rem; border-radius: 30px;
+animation: fadeUp 0.8s 0.2s both;
+}
+
+.cover-heading {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2.8rem, 9vw, 6.5rem);
+font-weight: 900;
+color: var(–paper);
+line-height: 1.05;
+animation: fadeUp 0.8s 0.4s both;
+}
+.cover-heading em {
+font-style: italic;
+background: linear-gradient(90deg, var(–gold), var(–blush));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.cover-name {
+font-family: ‘Dancing Script’, cursive;
+font-size: clamp(3rem, 11vw, 7rem);
+color: var(–gold);
+text-shadow: 0 0 50px rgba(212,168,67,0.45);
+animation: fadeUp 0.8s 0.55s both, goldPulse 2.5s 1.4s ease-in-out infinite alternate;
+line-height: 1;
+}
+@keyframes goldPulse {
+from { text-shadow: 0 0 30px rgba(212,168,67,0.35); }
+to { text-shadow: 0 0 70px rgba(212,168,67,0.75); }
+}
+
+.cover-rule {
+width: 80px; height: 2px;
+background: linear-gradient(90deg, transparent, var(–gold), transparent);
+animation: fadeUp 0.8s 0.65s both;
+}
+
+.cover-sub {
+color: rgba(255,255,255,0.5);
+font-size: 1rem; font-weight: 400; letter-spacing: 0.08rem;
+max-width: 380px; line-height: 1.7;
+animation: fadeUp 0.8s 0.75s both;
+}
+
+.cover-btn {
+margin-top: 0.8rem;
+background: linear-gradient(135deg, var(–gold), var(–blush));
+color: white; border: none; border-radius: 50px;
+padding: 0.9rem 2.8rem;
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.95rem; font-weight: 700;
+cursor: pointer; letter-spacing: 0.08rem; text-transform: uppercase;
+box-shadow: 0 8px 30px rgba(212,168,67,0.35);
+transition: transform 0.2s, box-shadow 0.2s;
+animation: fadeUp 0.8s 0.9s both;
+}
+.cover-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 40px rgba(212,168,67,0.5); }
+
+.cover-hearts {
+display: flex; gap: 0.8rem; font-size: 1.5rem;
+animation: fadeUp 0.8s 1.05s both;
+}
+.cover-hearts span { animation: heartbeat 1.4s ease-in-out infinite; }
+.cover-hearts span:nth-child(2) { animation-delay: 0.25s; }
+.cover-hearts span:nth-child(3) { animation-delay: 0.5s; }
+.cover-hearts span:nth-child(4) { animation-delay: 0.75s; }
+@keyframes heartbeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.25);} }
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(22px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+SLIDES 1–4 — MEMBER CARDS
+============================================================ */
+.member-slide {
+min-height: 100vh;
+align-items: center; justify-content: center;
+padding: 2rem 4rem;
+}
+
+/* unique backgrounds per member */
+#s1 { background: linear-gradient(145deg, #1e0f0d 0%, #2a1210 55%, #1a0d0c 100%); }
+#s2 { background: linear-gradient(145deg, #0c1a0e 0%, #0f2211 55%, #0c1a0e 100%); }
+#s3 { background: linear-gradient(145deg, #0c1220 0%, #0f1a2e 55%, #0c1220 100%); }
+#s4 { background: linear-gradient(145deg, #160d1e 0%, #1f1028 55%, #160d1e 100%); }
+
+.member-slide::before {
+content: ‘’;
+position: absolute; inset: 0;
+background: radial-gradient(ellipse at 80% 20%, var(–pg-light, rgba(255,255,255,0.06)) 0%, transparent 60%);
+pointer-events: none;
+}
+#s1 { –pg: var(–p1); –pg-light: rgba(232,117,106,0.12); }
+#s2 { –pg: var(–p2); –pg-light: rgba(94,140,97,0.12); }
+#s3 { –pg: var(–p3); –pg-light: rgba(74,111,165,0.12); }
+#s4 { –pg: var(–p4); –pg-light: rgba(123,79,142,0.12); }
+
+/* number watermark */
+.member-slide .watermark {
+position: absolute; bottom: 1rem; right: 2rem;
+font-family: ‘Playfair Display’, serif;
+font-size: 9rem; font-weight: 900;
+color: rgba(255,255,255,0.04);
+line-height: 1; user-select: none; pointer-events: none;
+}
+
+/* card */
+.member-card {
+position: relative; z-index: 1;
+width: 100%; max-width: 820px;
+display: grid; grid-template-columns: 220px 1fr;
+gap: 2.5rem; align-items: start;
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255,255,255,0.09);
+border-radius: 28px;
+padding: 2.5rem;
+box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 680px) {
+.member-slide { padding: 2rem 4rem; }
+.member-card {
+grid-template-columns: 1fr;
+text-align: center;
+padding: 2rem 1.5rem;
+}
+.photo-col { align-items: center; }
+}
+
+/* photo column */
+.photo-col {
+display: flex; flex-direction: column;
+align-items: flex-start; gap: 1rem;
+}
+
+.photo-wrap {
+width: 180px; height: 180px; border-radius: 20px;
+position: relative; cursor: pointer; overflow: hidden;
+border: 3px solid rgba(255,255,255,0.1);
+flex-shrink: 0;
+transition: border-color 0.3s, transform 0.2s;
+background: rgba(255,255,255,0.05);
+}
+.photo-wrap:hover { border-color: var(–pg); transform: scale(1.02); }
+
+.photo-wrap img {
+width: 100%; height: 100%; object-fit: cover;
+border-radius: 17px;
+}
+
+/* placeholder state */
+.photo-placeholder {
+position: absolute; inset: 0;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+gap: 0.5rem; color: rgba(255,255,255,0.3);
+transition: color 0.2s;
+}
+.photo-wrap:hover .photo-placeholder { color: var(–pg); }
+.photo-placeholder .ph-icon { font-size: 2.2rem; }
+.photo-placeholder .ph-text { font-size: 0.7rem; font-weight: 700; text-align: center; }
+
+.photo-hover-overlay {
+position: absolute; inset: 0; border-radius: 17px;
+background: rgba(0,0,0,0.5);
+display: flex; align-items: center; justify-content: center;
+opacity: 0; transition: opacity 0.2s; z-index: 2;
+color: white; font-size: 0.75rem; font-weight: 700;
+}
+.photo-wrap:hover .photo-hover-overlay { opacity: 1; }
+.photo-file-input { display: none; }
+
+/* accent tag */
+.accent-tag {
+display: inline-flex; align-items: center; gap: 0.4rem;
+background: var(–pg); border-radius: 20px;
+padding: 0.3rem 0.9rem;
+font-size: 0.7rem; font-weight: 800;
+letter-spacing: 0.12rem; text-transform: uppercase;
+color: white;
+}
+
+/* text column */
+.text-col {
+display: flex; flex-direction: column; gap: 1rem;
+}
+
+.page-label {
+font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22rem;
+text-transform: uppercase; color: var(–pg);
+}
+
+/* EDIT NAME */
+.member-name {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.8rem, 4vw, 2.5rem);
+font-weight: 700; color: white;
+outline: none;
+border-bottom: 2px dashed rgba(255,255,255,0.15);
+padding-bottom: 0.2rem;
+display: inline-block;
+transition: border-color 0.3s;
+caret-color: var(–pg);
+}
+.member-name:focus { border-color: var(–pg); }
+
+.edit-chip {
+font-size: 0.65rem; color: rgba(255,255,255,0.3);
+font-style: italic; margin-top: 0.2rem;
+}
+
+/* divider */
+.card-divider {
+width: 40px; height: 2px;
+background: var(–pg); border-radius: 2px;
+opacity: 0.6;
+}
+
+/* EDIT MESSAGE */
+.member-message {
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.08);
+border-radius: 14px; padding: 1.2rem 1.4rem;
+color: rgba(255,255,255,0.82);
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.93rem; line-height: 1.8; font-weight: 400;
+width: 100%; resize: none;
+outline: none;
+transition: border-color 0.3s;
+caret-color: var(–pg);
+min-height: 160px;
+}
+.member-message:focus { border-color: var(–pg); }
+.member-message::placeholder { color: rgba(255,255,255,0.2); }
+
+/* emoji bar */
+.emoji-bar {
+display: flex; gap: 0.3rem; flex-wrap: wrap;
+}
+.em-btn {
+background: rgba(255,255,255,0.06); border: none;
+border-radius: 8px; padding: 0.28rem 0.45rem;
+font-size: 1rem; cursor: pointer;
+transition: transform 0.15s, background 0.15s;
+}
+.em-btn:hover { transform: scale(1.3); background: rgba(255,255,255,0.13); }
+
+/* ============================================================
+SLIDE 5 — COLLAGE
+============================================================ */
+#s5 {
+background: linear-gradient(145deg, #12111A 0%, #1A1228 50%, #12111A 100%);
+padding: 0;
+overflow-y: auto;
+overflow-x: hidden;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.collage-ribbon {
+width: 100%; padding: 0.65rem 1rem;
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(14px);
+border-bottom: 1px solid rgba(255,255,255,0.07);
+text-align: center;
+font-size: 0.7rem; font-weight: 800;
+letter-spacing: 0.3rem; text-transform: uppercase;
+color: var(–gold); position: sticky; top: 0; z-index: 10;
+}
+
+.collage-inner {
+width: 100%; max-width: 960px;
+padding: 2rem 2rem 5rem;
+display: flex; flex-direction: column; align-items: center;
+gap: 1.8rem; position: relative; z-index: 1;
+}
+
+.collage-heading { text-align: center; }
+.collage-title {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.8rem, 5vw, 3rem);
+font-weight: 900; font-style: italic;
+color: white;
+}
+.collage-title em {
+background: linear-gradient(90deg, var(–gold), var(–blush));
+-webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+font-style: normal;
+}
+.collage-sub {
+color: rgba(255,255,255,0.4); font-size: 0.82rem; font-weight: 500;
+letter-spacing: 0.15rem; margin-top: 0.4rem; text-transform: uppercase;
+}
+
+/* ── THE COLLAGE GRID ── */
+.collage-grid {
+width: 100%;
+display: grid;
+grid-template-columns: repeat(12, 1fr);
+grid-auto-rows: 80px;
+gap: 8px;
+}
+
+/* Slot positions — editorial layout */
+/* slot 1: big portrait left */
+.cslot:nth-child(1) { grid-column: 1 / 5; grid-row: 1 / 5; }
+/* slot 2: tall right top */
+.cslot:nth-child(2) { grid-column: 5 / 9; grid-row: 1 / 3; }
+/* slot 3: small top-right */
+.cslot:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 3; }
+/* slot 4: mid centre */
+.cslot:nth-child(4) { grid-column: 5 / 9; grid-row: 3 / 5; }
+/* slot 5: mid right */
+.cslot:nth-child(5) { grid-column: 9 / 13; grid-row: 3 / 5; }
+/* slot 6: wide bottom strip full width */
+.cslot:nth-child(6) { grid-column: 1 / 13; grid-row: 5 / 7; }
+
+@media (max-width:640px) {
+.collage-grid { grid-template-columns: repeat(6,1fr); grid-auto-rows: 70px; }
+.cslot:nth-child(1) { grid-column:1/4; grid-row:1/4; }
+.cslot:nth-child(2) { grid-column:4/7; grid-row:1/3; }
+.cslot:nth-child(3) { grid-column:4/7; grid-row:3/4; }
+.cslot:nth-child(4) { grid-column:1/4; grid-row:4/6; }
+.cslot:nth-child(5) { grid-column:4/7; grid-row:4/6; }
+.cslot:nth-child(6) { grid-column:1/7; grid-row:6/8; }
+}
+
+.cslot {
+position: relative; overflow: hidden;
+border-radius: 14px; cursor: pointer;
+}
+.cslot-bg {
+position: absolute; inset: 0;
+background: rgba(255,255,255,0.04);
+border: 2px dashed rgba(255,255,255,0.12);
+border-radius: 14px;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+gap: 0.4rem; color: rgba(255,255,255,0.25);
+transition: border-color 0.25s, background 0.25s, color 0.25s;
+text-align: center; padding: 0.8rem;
+}
+.cslot:hover .cslot-bg {
+border-color: var(–gold);
+background: rgba(212,168,67,0.06);
+color: var(–gold);
+}
+.cslot-bg .ci { font-size: 1.6rem; transition: transform 0.2s; }
+.cslot:hover .cslot-bg .ci { transform: scale(1.2); }
+.cslot-bg .cl { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06rem; }
+
+.cslot-img {
+position: absolute; inset: 0;
+width: 100%; height: 100%; object-fit: cover;
+border-radius: 12px;
+transition: transform 0.35s;
+}
+.cslot:hover .cslot-img { transform: scale(1.05); }
+
+.cslot-over {
+position: absolute; inset: 0; border-radius: 12px;
+background: rgba(0,0,0,0.52);
+display: flex; align-items: center; justify-content: center;
+opacity: 0; transition: opacity 0.25s; z-index: 3;
+color: white; font-size: 0.75rem; font-weight: 700;
+}
+.cslot:hover .cslot-over { opacity: 1; }
+
+/* bottom accent bar */
+.cslot::after {
+content: ‘’;
+position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+z-index: 2; border-radius: 0 0 12px 12px; opacity: 0.7;
+}
+.cslot:nth-child(1)::after { background: var(–p1); }
+.cslot:nth-child(2)::after { background: var(–p2); }
+.cslot:nth-child(3)::after { background: var(–p3); }
+.cslot:nth-child(4)::after { background: var(–p4); }
+.cslot:nth-child(5)::after { background: var(–gold); }
+.cslot:nth-child(6)::after { background: linear-gradient(90deg,var(–p1),var(–gold),var(–p2)); }
+
+.collage-file { display: none; }
+.collage-hint {
+font-size: 0.75rem; color: rgba(255,255,255,0.28); text-align: center;
+font-weight: 500; letter-spacing: 0.05rem;
+}
+.collage-hint b { color: var(–gold); }
+
+/* caption */
+.collage-caption-box {
+width: 100%;
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.09);
+border-radius: 16px; padding: 1.1rem 1.5rem;
+transition: border-color 0.3s;
+}
+.collage-caption-box:focus-within { border-color: var(–gold); }
+.collage-caption-label {
+font-size: 0.66rem; font-weight: 800; letter-spacing: 0.2rem;
+text-transform: uppercase; color: var(–gold); margin-bottom: 0.5rem;
+}
+/* EDIT CAPTION */
+.collage-caption {
+background: transparent; border: none; outline: none;
+color: white; font-family: ‘Dancing Script’, cursive;
+font-size: 1.55rem; font-weight: 600;
+width: 100%; caret-color: var(–gold);
+}
+.collage-caption::placeholder { color: rgba(255,255,255,0.17); }
+
+/* garland */
+.garland {
+display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap;
+font-size: 1.7rem;
+}
+.garland span { animation: wiggle 3.5s ease-in-out infinite; display: inline-block; }
+.garland span:nth-child(2n) { animation-delay: 0.5s; }
+.garland span:nth-child(3n) { animation-delay: 1s; }
+.garland span:nth-child(4n) { animation-delay: 1.5s; }
+@keyframes wiggle { 0%,100%{transform:rotate(-6deg) scale(1);} 50%{transform:rotate(6deg) scale(1.1);} }
+
+/* ── QR / FOOTER BLOCK ── */
+.qr-block {
+width: 100%; max-width: 560px;
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.09);
+border-radius: 20px;
+padding: 1.6rem 2rem;
+display: flex; align-items: center; gap: 2rem;
+}
+@media(max-width:500px) { .qr-block { flex-direction: column; text-align: center; } }
+
+.qr-box {
+width: 90px; height: 90px; flex-shrink: 0;
+background: white; border-radius: 12px;
+display: flex; align-items: center; justify-content: center;
+font-size: 3rem;
+}
+.qr-text { }
+.qr-text h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.4rem;
+}
+.qr-text p {
+font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.6;
+}
+.qr-text a {
+color: var(–gold); text-decoration: none; font-weight: 600;
+}
+.qr-text a:hover { text-decoration: underline; }
+
+/* ============================================================
+SCROLLBAR
+============================================================ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+
+/* ============================================================
+PRINT
+============================================================ */
+@media print {
+body { overflow: visible; height: auto; }
+#slides { overflow: visible; height: auto; }
+.slide { position: relative; opacity: 1; transform: none !important;
+pointer-events: all; page-break-after: always; }
+.nav-arrow, #dots, #saveBtn, #confetti { display: none !important; }
+.member-slide { min-height: 100vh; }
+}
+</style>
+
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div id="toast"></div>
+<button id="saveBtn" onclick="window.print()">🖨️ Print / PDF</button>
+
+<!-- NAVIGATION ARROWS -->
+
+<button class="nav-arrow hidden" id="prevBtn" onclick="navigate(-1)">‹</button>
+<button class="nav-arrow" id="nextBtn" onclick="navigate(1)">›</button>
+
+<!-- DOTS -->
+
+<div id="dots"></div>
+
+<!-- ================================================================
+SLIDES
+================================================================ -->
+
+<div id="slides">
+
+<!-- ── SLIDE 0: COVER ── -->
+
+<div class="slide active" id="s0">
+<div class="cover-orb orb1"></div>
+<div class="cover-orb orb2"></div>
+<div class="cover-orb orb3"></div>
+<div class="cover-inner">
+<span class="cover-eyebrow">✦ A farewell from the team ✦</span>
+<h1 class="cover-heading">Thank You,<br><em>for everything</em></h1>
+<div class="cover-name">Ashish</div>
+<div class="cover-rule"></div>
+<p class="cover-sub">You've left a mark on every one of us. Here are a few words from the people who'll miss you most.</p>
+<button class="cover-btn" onclick="navigate(1)">Read Our Messages 🎁</button>
+<div class="cover-hearts">
+<span>❤️</span><span>🧡</span><span>💛</span><span>💚</span>
+</div>
+</div>
+</div>
+
+<!-- ================================================================
+SLIDE 1 — KRITIKA ZUTSHI
+================================================================ -->
+
+<div class="slide member-slide" id="s1">
+<div class="watermark">01</div>
+<div class="member-card">
+
+```
+<!-- PHOTO COL -->
+<div class="photo-col">
+<!-- REPLACE IMAGE HERE: click the frame to upload, or change src below -->
+<div class="photo-wrap" onclick="triggerPhoto('p1')">
+<input type="file" class="photo-file-input" id="p1" accept="image/*" onchange="loadPhoto('p1', this)">
+<img id="p1-img" src="" alt="" style="display:none;">
+<div class="photo-placeholder" id="p1-ph">
+<span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span>
+</div>
+<div class="photo-hover-overlay">📂 Change</div>
+</div>
+<div class="accent-tag" style="background:var(--p1);">🌸 Message 1 of 4</div>
+</div>
+
+<!-- TEXT COL -->
+<div class="text-col">
+<div class="page-label">From the team — with love</div>
+
+<!-- EDIT NAME HERE -->
+<div class="member-name" contenteditable="true" spellcheck="false"
+data-ph="Name">Kritika Zutshi</div>
+<div class="edit-chip">✏️ Click name to edit</div>
+<div class="card-divider"></div>
+
+<!-- EDIT MESSAGE HERE -->
+<textarea class="member-message">Hi Ashish, before you move ahead in your life I want you to know you bring a difference in people's lives with a very personal contribution. You've helped me feel connected to the office when no one was there. I hope you know you carry a quality that brings joy and comfort to the environment.
+```
+
+You will achieve great success in whatever you do big or small, and make all the offices alive wherever you go and bring liveliness to the people around you. 🌟</textarea>
+
+```
+<div class="emoji-bar">
+<button class="em-btn" onclick="insertEmoji('s1','❤️')">❤️</button>
+<button class="em-btn" onclick="insertEmoji('s1','🌟')">🌟</button>
+<button class="em-btn" onclick="insertEmoji('s1','🙏')">🙏</button>
+<button class="em-btn" onclick="insertEmoji('s1','💪')">💪</button>
+<button class="em-btn" onclick="insertEmoji('s1','😊')">😊</button>
+<button class="em-btn" onclick="insertEmoji('s1','🎉')">🎉</button>
+<button class="em-btn" onclick="insertEmoji('s1','💛')">💛</button>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- ================================================================
+SLIDE 2 — GOKUL
+================================================================ -->
+
+<div class="slide member-slide" id="s2">
+<div class="watermark">02</div>
+<div class="member-card">
+
+```
+<div class="photo-col">
+<!-- REPLACE IMAGE HERE -->
+<div class="photo-wrap" onclick="triggerPhoto('p2')">
+<input type="file" class="photo-file-input" id="p2" accept="image/*" onchange="loadPhoto('p2', this)">
+<img id="p2-img" src="" alt="" style="display:none;">
+<div class="photo-placeholder" id="p2-ph">
+<span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span>
+</div>
+<div class="photo-hover-overlay">📂 Change</div>
+</div>
+<div class="accent-tag" style="background:var(--p2);">🌿 Message 2 of 4</div>
+</div>
+
+<div class="text-col">
+<div class="page-label">From the team — with love</div>
+<!-- EDIT NAME HERE -->
+<div class="member-name" contenteditable="true" spellcheck="false">Gokul</div>
+<div class="edit-chip">✏️ Click name to edit</div>
+<div class="card-divider"></div>
+<!-- EDIT MESSAGE HERE -->
+<textarea class="member-message">Standing tall, looking ahead — just like always. Ashish, your journey here ends, but your dreams are just getting started.
+```
+
+Wishing you success in every step ahead. The world is lucky to have someone like you walking into it. 🚀</textarea>
+
+```
+<div class="emoji-bar">
+<button class="em-btn" onclick="insertEmoji('s2','🚀')">🚀</button>
+<button class="em-btn" onclick="insertEmoji('s2','🌟')">🌟</button>
+<button class="em-btn" onclick="insertEmoji('s2','💪')">💪</button>
+<button class="em-btn" onclick="insertEmoji('s2','🏆')">🏆</button>
+<button class="em-btn" onclick="insertEmoji('s2','😊')">😊</button>
+<button class="em-btn" onclick="insertEmoji('s2','🎉')">🎉</button>
+<button class="em-btn" onclick="insertEmoji('s2','💚')">💚</button>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- ================================================================
+SLIDE 3 — DR. RAJESHWARI
+================================================================ -->
+
+<div class="slide member-slide" id="s3">
+<div class="watermark">03</div>
+<div class="member-card">
+
+```
+<div class="photo-col">
+<!-- REPLACE IMAGE HERE -->
+<div class="photo-wrap" onclick="triggerPhoto('p3')">
+<input type="file" class="photo-file-input" id="p3" accept="image/*" onchange="loadPhoto('p3', this)">
+<img id="p3-img" src="" alt="" style="display:none;">
+<div class="photo-placeholder" id="p3-ph">
+<span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span>
+</div>
+<div class="photo-hover-overlay">📂 Change</div>
+</div>
+<div class="accent-tag" style="background:var(--p3);">💙 Message 3 of 4</div>
+</div>
+
+<div class="text-col">
+<div class="page-label">From the team — with love</div>
+<!-- EDIT NAME HERE -->
+<div class="member-name" contenteditable="true" spellcheck="false">Dr. Rajeshwari</div>
+<div class="edit-chip">✏️ Click name to edit</div>
+<div class="card-divider"></div>
+<!-- EDIT MESSAGE HERE -->
+<textarea class="member-message">Hi Ashish,
+```
+
+Just the thought of you not being there come Monday overwhelms me so much. I AM GOING TO MISS YOU SO FUCKING MUCH. When I joined, I was scared and lost — you helped me like your little sister. With you around I always felt protected, like someone had my back.
+
+Even though you did get on my nerves sometimes 😄, I will always remember your warmth and kindness. Being a good man in a world like this is rare, and I know you’re going to be really successful and awesomer.
+
+I wish you good luck for everything. I congratulate you for every good thing that has happened and all the great things yet to come. I’ll always be praying for you. 💙</textarea>
+
+```
+<div class="emoji-bar">
+<button class="em-btn" onclick="insertEmoji('s3','💙')">💙</button>
+<button class="em-btn" onclick="insertEmoji('s3','🙏')">🙏</button>
+<button class="em-btn" onclick="insertEmoji('s3','❤️')">❤️</button>
+<button class="em-btn" onclick="insertEmoji('s3','😄')">😄</button>
+<button class="em-btn" onclick="insertEmoji('s3','🌟')">🌟</button>
+<button class="em-btn" onclick="insertEmoji('s3','💪')">💪</button>
+<button class="em-btn" onclick="insertEmoji('s3','🥹')">🥹</button>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- ================================================================
+SLIDE 4 — DR. ARCHANA
+================================================================ -->
+
+<div class="slide member-slide" id="s4">
+<div class="watermark">04</div>
+<div class="member-card">
+
+```
+<div class="photo-col">
+<!-- REPLACE IMAGE HERE -->
+<div class="photo-wrap" onclick="triggerPhoto('p4')">
+<input type="file" class="photo-file-input" id="p4" accept="image/*" onchange="loadPhoto('p4', this)">
+<img id="p4-img" src="" alt="" style="display:none;">
+<div class="photo-placeholder" id="p4-ph">
+<span class="ph-icon">📷</span>
+<span class="ph-text">Add Photo</span>
+</div>
+<div class="photo-hover-overlay">📂 Change</div>
+</div>
+<div class="accent-tag" style="background:var(--p4);">💜 Message 4 of 4</div>
+</div>
+
+<div class="text-col">
+<div class="page-label">From the team — with love</div>
+<!-- EDIT NAME HERE -->
+<div class="member-name" contenteditable="true" spellcheck="false">Dr. Archana</div>
+<div class="edit-chip">✏️ Click name to edit</div>
+<div class="card-divider"></div>
+<!-- EDIT MESSAGE HERE -->
+<textarea class="member-message">Hi Ashish,
+```
+
+We had the best time together, and I’m going to miss all the fun and even our little “ketchup” planning moments 😄. From the very first day I joined the team, your warm welcome made everything feel so comfortable.
+
+You’ve truly been the go-to person — a solution handbook for everyone in the team. Your positive attitude and kind nature made a difference more than you probably realise.
+
+As you move on to this next chapter, thank you for all the support, guidance, and good memories. It won’t be the same without you around.
+
+Wishing you lots of success, happiness, and continued positivity. Keep shining and stay in touch!
+
+Farewell and all the very best for your journey ahead. 💜</textarea>
+
+```
+<div class="emoji-bar">
+<button class="em-btn" onclick="insertEmoji('s4','💜')">💜</button>
+<button class="em-btn" onclick="insertEmoji('s4','😄')">😄</button>
+<button class="em-btn" onclick="insertEmoji('s4','🙏')">🙏</button>
+<button class="em-btn" onclick="insertEmoji('s4','🌟')">🌟</button>
+<button class="em-btn" onclick="insertEmoji('s4','❤️')">❤️</button>
+<button class="em-btn" onclick="insertEmoji('s4','🎉')">🎉</button>
+<button class="em-btn" onclick="insertEmoji('s4','✨')">✨</button>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- ================================================================
+SLIDE 5 — COLLAGE
+================================================================ -->
+
+<div class="slide" id="s5">
+<div class="collage-ribbon">📸 Team Memories — Ashish &amp; Us</div>
+
+```
+<div class="collage-inner">
+
+<div class="collage-heading">
+<div class="collage-title">Memories with <em>Ashish</em></div>
+<div class="collage-sub">Click any frame · upload a photo · hover to change</div>
+</div>
+
+<!-- COLLAGE GRID — 6 slots -->
+<!-- REPLACE IMAGES HERE: click each frame to upload -->
+<div class="collage-grid">
+
+<div class="cslot" onclick="triggerC(0)">
+<input type="file" class="collage-file" id="cf0" accept="image/*" onchange="loadC(0,this)">
+<div class="cslot-bg"><span class="ci">📷</span><span class="cl">Photo 1</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+<div class="cslot" onclick="triggerC(1)">
+<input type="file" class="collage-file" id="cf1" accept="image/*" onchange="loadC(1,this)">
+<div class="cslot-bg"><span class="ci">🤝</span><span class="cl">Photo 2</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+<div class="cslot" onclick="triggerC(2)">
+<input type="file" class="collage-file" id="cf2" accept="image/*" onchange="loadC(2,this)">
+<div class="cslot-bg"><span class="ci">🎉</span><span class="cl">Photo 3</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+<div class="cslot" onclick="triggerC(3)">
+<input type="file" class="collage-file" id="cf3" accept="image/*" onchange="loadC(3,this)">
+<div class="cslot-bg"><span class="ci">🌟</span><span class="cl">Photo 4</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+<div class="cslot" onclick="triggerC(4)">
+<input type="file" class="collage-file" id="cf4" accept="image/*" onchange="loadC(4,this)">
+<div class="cslot-bg"><span class="ci">💛</span><span class="cl">Photo 5</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+<div class="cslot" onclick="triggerC(5)">
+<input type="file" class="collage-file" id="cf5" accept="image/*" onchange="loadC(5,this)">
+<div class="cslot-bg"><span class="ci">🏆</span><span class="cl">Best Group Shot</span></div>
+<div class="cslot-over">📂 Change</div>
+</div>
+
+</div>
+
+<div class="collage-hint">6 photo slots · <b>click any frame</b> to upload · hover over a filled photo to swap it</div>
+
+<!-- EDIT CAPTION HERE -->
+<div class="collage-caption-box">
+<div class="collage-caption-label">✍️ Team caption</div>
+<textarea class="collage-caption" rows="2"
+placeholder="Once a team, always a family… 🧡">Once a team, always a family. 🧡</textarea>
+</div>
+
+<div class="garland">
+<span>🎉</span><span>🌟</span><span>💛</span><span>🎊</span>
+<span>🥂</span><span>🙌</span><span>💪</span><span>🎈</span>
+<span>❤️</span><span>🫶</span><span>✨</span><span>🧡</span>
+</div>
+
+<!-- QR / HOST BLOCK -->
+<div class="qr-block">
+<div class="qr-box">📱</div>
+<div class="qr-text">
+<h3>Share this page with Ashish</h3>
+<p>
+Host this file on <a href="https://app.netlify.com/drop" target="_blank">Netlify Drop</a>
+or <a href="https://pages.github.com" target="_blank">GitHub Pages</a> to get a shareable link,
+then generate a QR code at <a href="https://qr.io" target="_blank">qr.io</a> and print it
+for the farewell event! 🎁
+</p>
+</div>
+</div>
+
+</div>
+```
+
+</div>
+
+</div><!-- /slides -->
+
+<script>
+/* ============================================================
+SLIDE NAVIGATION
+============================================================ */
+const TOTAL = 6; // slides 0–5
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+
+function navigate(dir) {
+const next = cur + dir;
+if (next < 0 || next >= TOTAL) return;
+slides[cur].classList.remove('active');
+slides[cur].classList.add('exit-left');
+setTimeout(() => slides[cur].classList.remove('exit-left'), 560);
+cur = next;
+slides[cur].classList.add('active');
+syncUI();
+window.scrollTo(0, 0);
+}
+
+// keyboard support
+document.addEventListener('keydown', e => {
+if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+});
+
+// swipe support
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+const dx = e.changedTouches[0].clientX - tx;
+if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+function syncUI() {
+document.getElementById('prevBtn').classList.toggle('hidden', cur === 0);
+document.getElementById('nextBtn').classList.toggle('hidden', cur === TOTAL - 1);
+document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+}
+
+/* build dots */
+const dotsEl = document.getElementById('dots');
+['🏠','1','2','3','4','📸'].forEach((lbl, i) => {
+const d = document.createElement('div');
+d.className = 'dot' + (i === 0 ? ' active' : '');
+d.title = ['Cover','Kritika','Gokul','Dr. Rajeshwari','Dr. Archana','Collage'][i];
+d.onclick = () => { const diff = i - cur; if (diff !== 0) navigate(diff); };
+dotsEl.appendChild(d);
+});
+
+/* ============================================================
+PHOTO UPLOAD — MEMBER CARDS
+============================================================ */
+function triggerPhoto(id) { document.getElementById(id).click(); }
+
+function loadPhoto(id, input) {
+const file = input.files[0]; if (!file) return;
+const reader = new FileReader();
+reader.onload = e => {
+const img = document.getElementById(id + '-img');
+img.src = e.target.result;
+img.style.display = 'block';
+document.getElementById(id + '-ph').style.display = 'none';
+toast('📸 Photo updated!');
+};
+reader.readAsDataURL(file);
+}
+
+/* ============================================================
+PHOTO UPLOAD — COLLAGE
+============================================================ */
+function triggerC(i) { document.getElementById('cf' + i).click(); }
+
+function loadC(i, input) {
+const file = input.files[0]; if (!file) return;
+const reader = new FileReader();
+reader.onload = e => {
+const slot = document.querySelectorAll('.cslot')[i];
+let img = slot.querySelector('.cslot-img');
+if (!img) {
+img = document.createElement('img');
+img.className = 'cslot-img';
+slot.querySelector('.cslot-over').before(img);
+}
+img.src = e.target.result;
+slot.querySelector('.cslot-bg').style.opacity = '0';
+toast('🖼️ Photo ' + (i+1) + ' added!');
+};
+reader.readAsDataURL(file);
+}
+
+/* ============================================================
+EMOJI INSERT
+============================================================ */
+function insertEmoji(slideId, emoji) {
+const ta = document.querySelector('#' + slideId + ' .member-message');
+if (!ta) return;
+const p = ta.selectionStart;
+ta.value = ta.value.slice(0, p) + emoji + ta.value.slice(p);
+ta.selectionStart = ta.selectionEnd = p + emoji.length;
+ta.focus();
+}
+
+/* ============================================================
+TOAST
+============================================================ */
+function toast(msg) {
+const t = document.getElementById('toast');
+t.textContent = msg; t.classList.add('show');
+clearTimeout(t._t);
+t._t = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ============================================================
+CONFETTI
+============================================================ */
+const cvs = document.getElementById('confetti');
+const ctx = cvs.getContext('2d');
+function resizeCvs() { cvs.width = innerWidth; cvs.height = innerHeight; }
+resizeCvs(); window.addEventListener('resize', resizeCvs);
+
+const CC = ['#D4A843','#E8756A','#5E8C61','#4A6FA5','#7B4F8E','#fff','#F0CB72'];
+const flakes = Array.from({length: 65}, () => ({
+x: Math.random() * innerWidth,
+y: Math.random() * innerHeight - innerHeight,
+w: Math.random() * 9 + 4,
+h: Math.random() * 5 + 2,
+color: CC[Math.floor(Math.random() * CC.length)],
+speed: Math.random() * 1.6 + 0.4,
+angle: Math.random() * Math.PI * 2,
+spin: (Math.random() - 0.5) * 0.12,
+sway: Math.random() * 1.5 - 0.75,
+}));
+
+(function draw() {
+ctx.clearRect(0, 0, cvs.width, cvs.height);
+flakes.forEach(f => {
+ctx.save();
+ctx.translate(f.x, f.y); ctx.rotate(f.angle);
+ctx.fillStyle = f.color; ctx.globalAlpha = 0.65;
+ctx.fillRect(-f.w/2, -f.h/2, f.w, f.h);
+ctx.restore();
+f.y += f.speed; f.x += f.sway * 0.3; f.angle += f.spin;
+if (f.y > cvs.height + 15) { f.y = -15; f.x = Math.random() * cvs.width; }
+});
+requestAnimationFrame(draw);
+})();
+
+/* ============================================================
+CONTENTEDITABLE PLACEHOLDER
+============================================================ */
+document.querySelectorAll('.member-name').forEach(el => {
+el.addEventListener('focus', () => { if (el.textContent.trim() === (el.dataset.ph||'')) el.textContent = ''; });
+el.addEventListener('blur', () => { if (!el.textContent.trim()) el.textContent = el.dataset.ph || 'Name'; });
+});
+</script>
+
+</body>
+</html>
